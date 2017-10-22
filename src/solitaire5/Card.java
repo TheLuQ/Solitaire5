@@ -5,14 +5,30 @@
  */
 package solitaire5;
 
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Lukas
  */
-public class Card extends Base{
+public class Card extends Base implements IFigure, IColor{
+    private final Figure figure;
+    private final int number;
     
-    public Card(String img) {
+    public Card(String img, Figure figure, int number) {
         super(img);
+        this.number = number;
+        this.figure = figure;
+    }
+
+    @Override
+    public Figure getFigure() {
+       return this.figure;
+    }
+
+    @Override
+    public Color getColor() {
+        return figure.getColor();
     }
     
 }

@@ -6,12 +6,13 @@
 
 package solitaire5;
 
-import java.util.Arrays;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -26,12 +27,13 @@ public class Solitaire5 extends Application {
     final int PREF_WIDTH = 990;
     final int PREF_HEIGHT = 684;
     private static GridPane root;
+    private final static List<Card> allCards = loadCards(); // all Cards from res.cards location
     
     @Override
     public void start(Stage primaryStage) {
-        root = initGrid();        
+        root = initGrid();     
         Scene scene = new Scene(root, PREF_WIDTH, PREF_HEIGHT);
-        
+
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();    
@@ -64,6 +66,40 @@ public class Solitaire5 extends Application {
 
 //        grid.setHgap(10);
         return grid;
+    }
+    
+    private static List<Card> loadCards(){
+        List<Card> tempCardList = new ArrayList<>();
+        File[][] cardFiles = new File[4][];
+        
+        cardFiles[0] = new File("src/res/cards/kier").listFiles();
+        cardFiles[1] = new File("src/res/cards/karo").listFiles();
+        cardFiles[2] = new File("src/res/cards/trefl").listFiles();
+        cardFiles[3] = new File("src/res/cards/pik").listFiles();
+        
+        for (int i = 0; i < 4; i++) {
+            for (File cardFile : cardFiles[i]) {
+                String pathName = "file:" + cardFile.getAbsolutePath();
+                int cardNumber = Integer.parseInt(cardFile.getName().replace(".png", ""));
+                switch (i){
+                    case 0:
+                        tempCardList.add(new Card(pathName,Figure.KIER,cardNumber));
+                        break;
+                    case 1:
+                        tempCardList.add(new Card(pathName,Figure.KARO,cardNumber));
+                        break;
+                    case 2:
+                        tempCardList.add(new Card(pathName,Figure.TREFL,cardNumber));
+                        break;
+                    case 3:
+                        tempCardList.add(new Card(pathName,Figure.PIK,cardNumber));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return tempCardList;
     }
     
     public void gameUpdate(){        
