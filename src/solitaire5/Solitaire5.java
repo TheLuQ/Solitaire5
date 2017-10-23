@@ -31,9 +31,9 @@ public class Solitaire5 extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        root = initGrid();     
+        root = initGrid();
         Scene scene = new Scene(root, PREF_WIDTH, PREF_HEIGHT);
-
+        
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();    
@@ -72,10 +72,10 @@ public class Solitaire5 extends Application {
         List<Card> tempCardList = new ArrayList<>();
         File[][] cardFiles = new File[4][];
         
-        cardFiles[0] = new File("src/res/cards/kier").listFiles();
-        cardFiles[1] = new File("src/res/cards/karo").listFiles();
-        cardFiles[2] = new File("src/res/cards/trefl").listFiles();
-        cardFiles[3] = new File("src/res/cards/pik").listFiles();
+        cardFiles[0] = new File("src/res/cards/heart").listFiles();
+        cardFiles[1] = new File("src/res/cards/diamond").listFiles();
+        cardFiles[2] = new File("src/res/cards/club").listFiles();
+        cardFiles[3] = new File("src/res/cards/spade").listFiles();
         
         for (int i = 0; i < 4; i++) {
             for (File cardFile : cardFiles[i]) {

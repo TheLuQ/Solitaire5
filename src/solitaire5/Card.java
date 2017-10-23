@@ -14,11 +14,13 @@ import javafx.scene.paint.Color;
 public class Card extends Base implements IFigure, IColor{
     private final Figure figure;
     private final int number;
+    private InitialPoo poo;
     
     public Card(String img, Figure figure, int number) {
         super(img);
         this.number = number;
         this.figure = figure;
+        setManaged(false);
     }
 
     @Override
@@ -31,4 +33,11 @@ public class Card extends Base implements IFigure, IColor{
         return figure.getColor();
     }
     
+    public void setPoo(InitialPoo poo){
+        this.poo = poo;
+    }
+    
+    public InitialPoo getPoo(){
+        return poo;
+    }
 }
