@@ -15,7 +15,9 @@ import javafx.event.EventType;
  */
 public class CardEvent extends Event{
     public static final EventType<CardEvent> MOVE_CARD = new EventType<CardEvent>(Event.ANY, "MOVE_CARD");
+    public static final EventType<CardEvent> DRAG_CARD = new EventType<CardEvent>(Event.ANY, "DRAG_CARD");
     public double ox, oy;
+    public Card startDragCard;
     
     public CardEvent(Object source, EventTarget target, EventType<? extends Event> eventType, double oy) {
         super(source, target, eventType);
@@ -27,6 +29,8 @@ public class CardEvent extends Event{
         super(source, target, eventType);
         this.ox = ox;
         this.oy = oy;
+        if (source instanceof Card)
+            this.startDragCard = (Card) source;
     }
     
 }

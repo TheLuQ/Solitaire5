@@ -27,6 +27,7 @@ public class Solitaire5 extends Application {
     final int PREF_WIDTH = 990;
     final int PREF_HEIGHT = 684;
     private static GridPane root;
+    private static InitialPoo poo = new InitialPoo();
     private final static List<Card> allCards = loadCards(); // all Cards from res.cards location
     
     @Override
@@ -36,7 +37,7 @@ public class Solitaire5 extends Application {
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
-        primaryStage.show();    
+        primaryStage.show();
         
         gameLoop.start();
     }
@@ -83,16 +84,16 @@ public class Solitaire5 extends Application {
                 int cardNumber = Integer.parseInt(cardFile.getName().replace(".png", ""));
                 switch (i){
                     case 0:
-                        tempCardList.add(new Card(pathName,Figure.KIER,cardNumber));
+                        tempCardList.add(new Card(pathName,Figure.KIER,cardNumber, poo));
                         break;
                     case 1:
-                        tempCardList.add(new Card(pathName,Figure.KARO,cardNumber));
+                        tempCardList.add(new Card(pathName,Figure.KARO,cardNumber, poo));
                         break;
                     case 2:
-                        tempCardList.add(new Card(pathName,Figure.TREFL,cardNumber));
+                        tempCardList.add(new Card(pathName,Figure.TREFL,cardNumber, poo));
                         break;
                     case 3:
-                        tempCardList.add(new Card(pathName,Figure.PIK,cardNumber));
+                        tempCardList.add(new Card(pathName,Figure.PIK,cardNumber, poo));
                         break;
                     default:
                         break;

@@ -20,10 +20,6 @@ abstract class Base extends ImageView{
         super(new Image(img));
         setFitWidth(CARD_WIDTH);
         setFitHeight(CARD_HEIGHT);   
-        
-        this.setEventHandler(CardEvent.MOVE_CARD, ev -> {
-            this.relocate(ev.ox, ev.oy);
-        });
     }
     
 }

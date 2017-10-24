@@ -7,7 +7,6 @@ package solitaire5;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
 import javafx.event.Event;
@@ -24,25 +23,32 @@ public class InitialPoo extends Base implements BiConsumer<List<Card>, InitialPo
     public InitialPoo() {
         super("file:src\\res\\dickbutt.png");
         cardsOnPoo  = new ArrayList<>();
-        oyShift = 0;
+        oyShift = 4;
         addCond = (cards, oldPoo) -> {
             oldPoo.removeFromPoo(cards);
-            this.addToPoo(cards); // TO DO - REVERSE ORDER?
+            cardsOnPoo.addAll(cards);
+            cards.forEach(card -> card.setPoo(this));
+            this.moveCardsTo(cards);
         };
-    }
-    
-    public void addToPoo(Card card){
-        addToPoo(Arrays.asList(card));
-    }
-    
-    public void addToPoo(List<Card> cards){
-        cards.forEach(card -> {
-            double lastOy = cardsOnPoo.isEmpty() ? 
-                    this.getLayoutY() : cardsOnPoo.get(cardsOnPoo.size() - 1).getLayoutY() + oyShift;
-            Event.fireEvent(card, new CardEvent(this, card, CardEvent.MOVE_CARD, this.getLayoutX(), lastOy));
-            card.toFront();
-            cardsOnPoo.add(card);
+        
+        //event test:
+        this.setEventHandler(CardEvent.DRAG_CARD, ev -> {
+            List<Card> cardsToDrag = cardsOnPoo.subList(cardsOnPoo.indexOf(ev.startDragCard), cardsOnPoo.size());
+            moveCardsTo(cardsToDrag,ev.ox,ev.oy);
         });
+    }
+    
+    private void moveCardsTo(List<Card> cards, double x, double y){ //basic moving of cards - only relocating
+        double yTemp = y;
+        for (Card card : cards) {
+            Event.fireEvent(card, new CardEvent(this, card, CardEvent.MOVE_CARD, x, yTemp));
+            yTemp += oyShift;
+            card.toFront();
+        }
+    }
+    
+    private void moveCardsTo(List<Card> cards){ //move to this Poo
+        moveCardsTo(cards,this.getLayoutX(),this.getLayoutY());
     }
     
     public void removeFromPoo(List<Card> cards){
@@ -55,7 +61,7 @@ public class InitialPoo extends Base implements BiConsumer<List<Card>, InitialPo
 
     @Override
     public void accept(List<Card> cards, InitialPoo oldPoo) {
-        addCond.accept(cards, this);
+        addCond.accept(cards, oldPoo);
     }
     
 }
